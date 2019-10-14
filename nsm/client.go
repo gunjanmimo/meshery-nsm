@@ -33,6 +33,7 @@ func configClient(kubeconfig []byte, contextName string) (*rest.Config, error) {
 	return rest.InClusterConfig()
 }
 
+
 func newClient(kubeconfig []byte, contextName string) (*NSMClient, error) {
 	kubeconfig = monkeyPatchingToSupportInsecureConn(kubeconfig)
 	client := NSMClient{}

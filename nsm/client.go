@@ -7,6 +7,7 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	// auth is needed for initialization only
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
 )
@@ -33,7 +34,6 @@ func configClient(kubeconfig []byte, contextName string) (*rest.Config, error) {
 	return rest.InClusterConfig()
 }
 
-
 func newClient(kubeconfig []byte, contextName string) (*NSMClient, error) {
 	kubeconfig = monkeyPatchingToSupportInsecureConn(kubeconfig)
 	client := NSMClient{}
@@ -48,6 +48,7 @@ func newClient(kubeconfig []byte, contextName string) (*NSMClient, error) {
 	if err != nil {
 		return nil, err
 	}
+	
 	client.k8sDynamicClient = dynamicClient
 
 	k8sClientset, err := kubernetes.NewForConfig(config)
